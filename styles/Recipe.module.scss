@@ -1,0 +1,55 @@
+.recipe {
+  h1 {
+    font-size: 48px;
+    font-weight: bolder;
+    color: #000;
+    margin-bottom: 15px;
+  }
+
+  .likeButton {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    outline: none;
+    background: none;
+    border: 1px solid #444;
+    padding: 6px 12px;
+    margin-bottom: 40px;
+    cursor: pointer;
+    color: red;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+
+    .breakdown {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 10px;
+      border: 0.5px solid #444;
+      padding: 10px;
+
+      .ingredients {
+        list-style: none;
+        padding: 25px 10px;
+        border-right: 0.5px solid #444;
+
+        .ingredient {
+          margin-bottom: 15px;
+        }
+      }
+
+      .instructions {
+        padding: 15px;
+      }
+    }
+  }
+
+  img {
+    border: 0.5px solid #444;
+    height: auto;
+    width: 100%;
+  }
+}
