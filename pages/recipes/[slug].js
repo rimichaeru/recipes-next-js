@@ -6,7 +6,6 @@ import {
   usePreviewSubscription,
   PortableText,
 } from "../../lib/sanity";
-
 import styles from "../../styles/Recipe.module.scss";
 
 // the $slug matches to the getStaticProps slug below
@@ -38,29 +37,28 @@ export default function OneRecipe({ data, preview }) {
   //   initialData: data,
   //   enabled: preview,
   // });
-  
+
   // if (router.isFallback) {
-    //   return <div>Loading...</div>;
-    // }
-    
-    const [likes, setLikes] = useState(data?.recipe?.likes);
-    
-    const addLike = async () => {
-      const res = await fetch("/api/handle-like", {
-        method: "POST",
-        body: JSON.stringify({ _id: recipe._id }),
-      }).catch((error) => console.log(error));
-      
-      const data = await res.json();
-      
-      setLikes(data.likes);
-    };
-    
-    const { recipe } = data; // use if not using preview above
-    
-    
-    return (
-      <article className={styles.recipe}>
+  //   return <div>Loading...</div>;
+  // }
+
+  const [likes, setLikes] = useState(data?.recipe?.likes);
+
+  const addLike = async () => {
+    const res = await fetch("/api/handle-like", {
+      method: "POST",
+      body: JSON.stringify({ _id: recipe._id }),
+    }).catch((error) => console.log(error));
+
+    const data = await res.json();
+
+    setLikes(data.likes);
+  };
+
+  const { recipe } = data; // use if not using preview above
+
+  return (
+    <article className={styles.recipe}>
       <h1>{recipe.name}</h1>
       <button className={styles.likeButton} onClick={addLike}>
         {likes} ❤
