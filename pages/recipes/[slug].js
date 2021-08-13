@@ -47,7 +47,7 @@ export default function OneRecipe({ data, preview }) {
     const addLike = async () => {
       const res = await fetch("/api/handle-like", {
         method: "POST",
-        body: JSON.stringify({ _id: recipe._id }),
+        body: JSON.stringify({ _id: recipe?._id }),
       }).catch((error) => console.log(error));
       
       const data = await res.json();
@@ -56,21 +56,21 @@ export default function OneRecipe({ data, preview }) {
     };
     
     // const { recipe } = data; // use if not using preview above
-    
+
     if (!data) return <div>Loading...</div>;
     
     return (
       <article className={styles.recipe}>
-      <h1>{recipe.name}</h1>
+      <h1>{recipe?.name}</h1>
       <button className={styles.likeButton} onClick={addLike}>
         {likes} ❤
       </button>
 
       <main className={styles.content}>
-        <img src={urlFor(recipe?.mainImage).url()} alt={recipe.name} />
+        <img src={urlFor(recipe?.mainImage).url()} alt={recipe?.name} />
         <div className={styles.breakdown}>
           <ul className={styles.ingredients}>
-            {recipe.ingredient?.map((ingredient) => {
+            {recipe?.ingredient?.map((ingredient) => {
               return (
                 <li key={ingredient._key} className={styles.ingredient}>
                   {ingredient?.wholeNumber}
