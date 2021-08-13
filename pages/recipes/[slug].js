@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import {
   sanityClient,
   urlFor,
@@ -28,15 +28,13 @@ const recipeQuery = `*[_type == "recipe" && slug.current == $slug][0] {
 }`;
 
 export default function OneRecipe({ data, preview }) {
-  // const router = useRouter();
+  const router = useRouter();
 
-  // if (!data) return <div>Loading...</div>;
-
-  // const { data: recipe } = usePreviewSubscription(recipeQuery, {
-  //   params: { slug: data.recipe?.slug.current },
-  //   initialData: data,
-  //   enabled: preview,
-  // });
+  const { data: recipe } = usePreviewSubscription(recipeQuery, {
+    params: { slug: data.recipe?.slug.current },
+    initialData: data,
+    enabled: preview,
+  });
 
   // if (router.isFallback) {
   //   return <div>Loading...</div>;
@@ -55,7 +53,11 @@ export default function OneRecipe({ data, preview }) {
     setLikes(data.likes);
   };
 
-  const { recipe } = data; // use if not using preview above
+  // const { recipe } = data; // use if not using preview above
+
+  if (router.isFallback) return (
+    <div>Loading...</div>
+  )
 
   return (
     <article className={styles.recipe}>
@@ -101,7 +103,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false, // fallback stops 404, goes back to page
+    fallback: true, // fallback stops 404, goes back to page
   };
 }
 
@@ -109,5 +111,5 @@ export async function getStaticProps({ params }) {
   const { slug } = params; // slug here matches name of this route file [slug].js
   const recipe = await sanityClient.fetch(recipeQuery, { slug });
 
-  return { props: { data: { recipe }, preview: false } };
+  return { props: { data: { recipe }, preview: true } };
 }
