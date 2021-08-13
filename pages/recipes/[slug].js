@@ -42,7 +42,7 @@ export default function OneRecipe({ data = {}, preview }) {
   //   return <div>Loading...</div>;
   // }
 
-  const [likes, setLikes] = useState(data?.recipe?.likes);
+  const [likes, setLikes] = useState(null);
   // const [likes, setLikes] = useState(data?.recipe?.likes);
 
   const addLike = async () => {
