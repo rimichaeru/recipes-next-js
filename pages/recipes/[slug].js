@@ -40,7 +40,8 @@ export default function OneRecipe({ data, preview }) {
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
-  const [likes, setLikes] = useState(data ? data?.recipe?.likes : null);
+  // const [likes, setLikes] = useState(data?.recipe?.likes);
+  const [likes, setLikes] = useState([]);
 
   const addLike = async () => {
     const res = await fetch("/api/handle-like", {
