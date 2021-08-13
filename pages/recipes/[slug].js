@@ -40,7 +40,7 @@ export default function OneRecipe({ data, preview }) {
   //   return <div>Loading...</div>;
   // }
 
-  const [likes, setLikes] = useState(data?.recipe?.likes);
+  const [likes, setLikes] = useState(null);
 
   const addLike = async () => {
     const res = await fetch("/api/handle-like", {
