@@ -1,6 +1,7 @@
 # Best Kitchen - Next.js, sanity.io CMS, GROQ App
 
 See the live version below, front-end deployed with Vercel:
+https://recipes-next-js-pi.vercel.app/ 
 
 Test project to practice Next with a CMS.
 

@@ -7,6 +7,9 @@ import {
   PortableText,
 } from "../../lib/sanity";
 import styles from "../../styles/Recipe.module.scss";
+import { css } from "@emotion/react";
+import ClipLoader from "react-spinners/ClipLoader";
+import { useEffect } from "react";
 
 // the $slug matches to the getStaticProps slug below
 const recipeQuery = `*[_type == "recipe" && slug.current == $slug][0] {
@@ -27,18 +30,21 @@ const recipeQuery = `*[_type == "recipe" && slug.current == $slug][0] {
   likes
 }`;
 
+const override = css`
+  display: block;
+  margin: 16vh auto;
+`;
+
 export default function OneRecipe({ data, preview }) {
   const router = useRouter();
+
+  let [loading, setLoading] = useState(true);
 
   const { data: recipe } = usePreviewSubscription(recipeQuery, {
     params: { slug: data?.recipe?.slug.current },
     initialData: data,
     enabled: preview,
   });
-
-  // if (router.isFallback) {
-  //   return <div>Loading...</div>;
-  // }
 
   const [likes, setLikes] = useState(data?.recipe?.likes);
 
@@ -55,12 +61,28 @@ export default function OneRecipe({ data, preview }) {
 
   // const { recipe } = data; // use if not using preview above
 
-  if (router.isFallback) return (
-    <div>Loading...</div>
-  )
+  if (router.isFallback) return <div>Loading...</div>;
+
+  // setTimeout(() => {
+  //   setLoading(false);
+  // }, 500);
+
+  useEffect(() => {
+    if (data?.recipe?.likes) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 360);
+    }
+  }, [data?.recipe?.likes]);
+
+  if (loading)
+    return (
+      <ClipLoader color="#36D7B7" loading={loading} css={override} size={120} />
+    );
 
   return (
     <article className={styles.recipe}>
+      {/* <ClipLoader color="#36D7B7" loading={loading} css={override} size={120} /> */}
       <h1>{recipe.name}</h1>
       <button className={styles.likeButton} onClick={addLike}>
         {likes} ❤
