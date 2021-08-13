@@ -31,35 +31,36 @@ const recipeQuery = `*[_type == "recipe" && slug.current == $slug][0] {
 export default function OneRecipe({ data, preview }) {
   // const router = useRouter();
 
-  if (!data) return <div>Loading...</div>;
-
+  
   const { data: recipe } = usePreviewSubscription(recipeQuery, {
     params: { slug: data.recipe?.slug.current },
     initialData: data,
     enabled: preview,
   });
-
+  
   // if (router.isFallback) {
-  //   return <div>Loading...</div>;
-  // }
-
-  const [likes, setLikes] = useState(data?.recipe?.likes);
-
-  const addLike = async () => {
-    const res = await fetch("/api/handle-like", {
-      method: "POST",
-      body: JSON.stringify({ _id: recipe._id }),
-    }).catch((error) => console.log(error));
-
-    const data = await res.json();
-
-    setLikes(data.likes);
-  };
-
-  // const { recipe } = data; // use if not using preview above
-
-  return (
-    <article className={styles.recipe}>
+    //   return <div>Loading...</div>;
+    // }
+    
+    const [likes, setLikes] = useState(data?.recipe?.likes);
+    
+    const addLike = async () => {
+      const res = await fetch("/api/handle-like", {
+        method: "POST",
+        body: JSON.stringify({ _id: recipe._id }),
+      }).catch((error) => console.log(error));
+      
+      const data = await res.json();
+      
+      setLikes(data.likes);
+    };
+    
+    // const { recipe } = data; // use if not using preview above
+    
+    if (!data) return <div>Loading...</div>;
+    
+    return (
+      <article className={styles.recipe}>
       <h1>{recipe.name}</h1>
       <button className={styles.likeButton} onClick={addLike}>
         {likes} ❤
