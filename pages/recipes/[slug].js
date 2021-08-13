@@ -49,9 +49,7 @@ export default function OneRecipe({ data, preview }) {
     const res = await fetch("/api/handle-like", {
       method: "POST",
       body: JSON.stringify({ _id: recipe._id }),
-    }).catch((error) => {
-      return console.log(error);
-    });
+    }).catch((error) => console.log(error));
 
     const data = await res.json();
 
