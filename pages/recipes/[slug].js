@@ -38,14 +38,13 @@ const override = css`
 export default function OneRecipe({ data, preview }) {
   const router = useRouter();
 
-  let [loading, setLoading] = useState(true);
-
   const { data: recipe } = usePreviewSubscription(recipeQuery, {
     params: { slug: data?.recipe?.slug.current },
     initialData: data,
     enabled: preview,
   });
 
+  const [loading, setLoading] = useState(true);
   const [likes, setLikes] = useState(data?.recipe?.likes);
 
   const addLike = async () => {
@@ -61,19 +60,13 @@ export default function OneRecipe({ data, preview }) {
 
   // const { recipe } = data; // use if not using preview above
 
-  if (router.isFallback) return <div>Loading...</div>;
-
-  // setTimeout(() => {
-  //   setLoading(false);
-  // }, 500);
-
   useEffect(() => {
-    if (data?.recipe?.likes) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 360);
+    if (recipe?.ingredient) {
+      setLoading(false);
     }
-  }, [data?.recipe?.likes]);
+  }, [recipe]);
+
+  if (router.isFallback) return <div>Loading...</div>;
 
   if (loading)
     return (
@@ -82,7 +75,6 @@ export default function OneRecipe({ data, preview }) {
 
   return (
     <article className={styles.recipe}>
-      {/* <ClipLoader color="#36D7B7" loading={loading} css={override} size={120} /> */}
       <h1>{recipe.name}</h1>
       <button className={styles.likeButton} onClick={addLike}>
         {likes} ❤
